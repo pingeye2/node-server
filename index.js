@@ -10,9 +10,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(cors());
 
-/* Use to send email from contact from to one address. */
 app.get('/',(req, res)=>{
-    res.send('welcome to my portfolio')
+    res.send('node server')
 })
 
 app.post('/', (req,res)=>{
