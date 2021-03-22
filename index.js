@@ -4,36 +4,33 @@ const nodemailer = require('nodemailer');
 const cors = require('cors');
 const SMTPTransport = require('nodemailer/lib/smtp-transport');
 
-/* test */
-
 const app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(cors());
 
+/* Use to send email from contact from to one address. */
 app.get('/',(req, res)=>{
     res.send('welcome to my portfolio')
 })
 
 app.post('/', (req,res)=>{
 
-/* TODO - we need to create seperate threads to handle each request */
-/* need to look at https://itnext.io/how-to-handle-the-post-request-body-in-node-js-without-using-a-framework-cd2038b93190*/
 
     let data = req.body
     let SMTPTransport = nodemailer.createTransport({
-        service:'Gmail',
-        port:465,
+        service:'Gmail', //email service
+        port:465, //Email service port number (465 for Gmail)
         auth:{
-            user:'username', //email username and password
-            pass: 'password'
+            user:'username', //send from email account username 
+            pass: 'password' //send from email account password
         }
     });
 
     let mailOptions={
         from:data.email,
-        to:'lankydragonqueries@gmail.com',
+        to:'example@gmail.com', //email send to address
         subject: `Message from ${data.name}`,
         html:`
         
