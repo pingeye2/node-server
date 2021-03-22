@@ -23,7 +23,7 @@ formSubmit = (e) => {
         }
         
         if(!myregex.test(subject)){
-            alert('name not valid');
+            alert('The subject is not valid');
             return false;
         }
 
