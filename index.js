@@ -15,6 +15,9 @@ app.get('/',(req, res)=>{
 })
 
 app.post('/', (req,res)=>{
+
+/* TODO - we need to create seperate threads to handle each request */
+
     let data = req.body
     let SMTPTransport = nodemailer.createTransport({
         service:'Gmail',
