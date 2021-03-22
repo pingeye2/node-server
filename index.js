@@ -17,6 +17,7 @@ app.get('/',(req, res)=>{
 app.post('/', (req,res)=>{
 
 /* TODO - we need to create seperate threads to handle each request */
+/* need to look at https://itnext.io/how-to-handle-the-post-request-body-in-node-js-without-using-a-framework-cd2038b93190*/
 
     let data = req.body
     let SMTPTransport = nodemailer.createTransport({
