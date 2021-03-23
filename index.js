@@ -18,38 +18,33 @@ let mainform = `<div><h1>HELLOE</h1>
 <input type="text" id="email" placeholder="email">
 <input type="text" id="subject" placeholder="subject">
 <input type="text" id="message" placeholder="message">
-<button onclick='formSubmit()'>submit</button>
+<button onclick="formSubmit('http://localhost:3001')">submit</button>
 <script src='validation.js'></script>
 </div>`;
 
+var validationStr = "";
+
 /* test form displayed on port 3001 */
 app.get('/',(req, res)=>{
+
+    res.header("Cache-Control", "no-cache, no-store, must-revalidate");
+    res.header("Pragma", "no-cache");
+    res.header("Expires", 0);
     res.send(mainform)
 })
 
 app.get('/validation.js',(req, res)=>{
 
-    let fileContent = '';
- 
-    const readInterface = readline.createInterface({
-        input: fs.createReadStream("C:\\Users\\deanl\\gittest\\node-server\\node-server\\validation.js"),
-        //output: process.stdout,
-        console: false
-    });
-
-    readInterface.on('line', function(line) {
-       fileContent += line;
-      });
-      // possibly need to wait for promises
-    // we need to wait unntil all of hte file has been read and then carry on here
-    // we do not want to get here until all of the file is read into fileContents
-console.log("fileContent is " + fileContent);
-res.send(fileContent);
+    
+res.header("Cache-Control", "no-cache, no-store, must-revalidate");
+    res.header("Pragma", "no-cache");
+    res.header("Expires", 0);
+res.send(validationStr);
 })
 
 app.post('/', (req,res)=>{
 
-
+    console.log("POST RECVED->" + JSON.stringify(req.body));
     let data = req.body
     let SMTPTransport = nodemailer.createTransport({
         service:'Gmail', //email service
@@ -91,6 +86,25 @@ app.post('/', (req,res)=>{
     SMTPTransport.close();
 })
 
+function preReadValidation()
+{
+
+    
+ 
+    const readInterface = readline.createInterface({
+        input: fs.createReadStream("C:\\Users\\deanl\\gittest\\node-server\\node-server\\validation.js"),
+        //output: process.stdout,
+        console: false
+    });
+
+    readInterface.on('line', function(line) {
+       validationStr += line;
+      });
+   
+
+}
+
+preReadValidation();
 const PORT = process.env.PORT||3001;
 app.listen(PORT,()=>{
     console.log(`server starting at port ${PORT}`);
