@@ -6,14 +6,14 @@ const SMTPTransport = require('nodemailer/lib/smtp-transport');
 const readline = require('readline');
 const fs = require('fs');
 
-
 const app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(cors());
 
-let mainform = `<div><h1>HELLOE</h1>
+/* test form displayed on port 3001 */
+let mainForm = `<div>
 <input type="text" id="name" placeholder="name">
 <input type="text" id="email" placeholder="email">
 <input type="text" id="subject" placeholder="subject">
@@ -22,30 +22,37 @@ let mainform = `<div><h1>HELLOE</h1>
 <script src='validation.js'></script>
 </div>`;
 
-/* test form displayed on port 3001 */
-app.get('/',(req, res)=>{
-    res.send(mainform)
-})
-
-app.get('/validation.js',(req, res)=>{
-
+/* gets validation.js in string format */
+const validation = () => {
     let fileContent = '';
- 
+
     const readInterface = readline.createInterface({
-        input: fs.createReadStream("C:\\Users\\deanl\\gittest\\node-server\\node-server\\validation.js"),
-        //output: process.stdout,
+        input: fs.createReadStream("C:\\Users\\charl\\OneDrive\\Desktop\\Opensource\\node-server\\node-server\\validation.js"), //file location on local
+        //output: process.stdout, //logs file in console
         console: false
     });
 
     readInterface.on('line', function(line) {
-       fileContent += line;
-      });
-      // possibly need to wait for promises
-    // we need to wait unntil all of hte file has been read and then carry on here
-    // we do not want to get here until all of the file is read into fileContents
-console.log("fileContent is " + fileContent);
-res.send(fileContent);
+    fileContent += line;
+    });
+
+    return fileContent;
+}
+
+//trying to get validation in string format before used on line 52
+let file = validation();
+console.log('myfile: ' + file);
+
+
+app.get('/',(req, res)=>{
+    res.send(mainForm)
 })
+
+app.get('/validation.js',(req, res)=>{
+    res.send(file);
+})
+
+
 
 app.post('/', (req,res)=>{
 
