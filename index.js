@@ -10,9 +10,20 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(cors());
 
+/* test form displayed on port 3001 */
 app.get('/',(req, res)=>{
-    res.send('node server')
+    res.send(`<div>
+    <input type="text" id="name" placeholder="name">
+    <input type="text" id="email" placeholder="email">
+    <input type="text" id="subject" placeholder="subject">
+    <input type="text" id="message" placeholder="message">
+    <button onclick=${formSubmit()}>submit</button>
+</div>`)
 })
+
+const formSubmit = () => {
+    console.log('hello');
+}
 
 app.post('/', (req,res)=>{
 
