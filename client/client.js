@@ -1,6 +1,6 @@
 
 /* called when form is submitted */
-formSubmit = (e) => {
+formSubmit = () => {
 
     //form validation
     const validateForm = () => {
@@ -13,31 +13,28 @@ formSubmit = (e) => {
         let message = document.getElementById('message').value;
 
         if(!myregex.test(name)){
-            alert('name not valid');
+            console.log('name not valid');
             return false;
         }
         
         if(!emailRegex.test(email)) {
-            alert('email not valid');
+            console.log('email not valid');
             return false;
         }
         
         if(!myregex.test(subject)){
-            alert('name not valid');
+            console.log('name not valid');
             return false;
         }
 
         if(!myregex.test(message)){
-            alert('message not valid');
+            console.log('message not valid');
             return false;
         }
 
         return true;
     }
-    
-    if(validateForm()) {
-
-        e.preventDefault();
+    if(validateForm()) {        
 
     let data = {
         name: name,
