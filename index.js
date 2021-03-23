@@ -3,6 +3,9 @@ const bodyParser = require('body-parser');
 const nodemailer = require('nodemailer');
 const cors = require('cors');
 const SMTPTransport = require('nodemailer/lib/smtp-transport');
+const readline = require('readline');
+const fs = require('fs');
+
 
 const app = express();
 
@@ -10,20 +13,39 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(cors());
 
+let mainform = `<div><h1>HELLOE</h1>
+<input type="text" id="name" placeholder="name">
+<input type="text" id="email" placeholder="email">
+<input type="text" id="subject" placeholder="subject">
+<input type="text" id="message" placeholder="message">
+<button onclick='formSubmit()'>submit</button>
+<script src='validation.js'></script>
+</div>`;
+
 /* test form displayed on port 3001 */
 app.get('/',(req, res)=>{
-    res.send(`<div>
-    <input type="text" id="name" placeholder="name">
-    <input type="text" id="email" placeholder="email">
-    <input type="text" id="subject" placeholder="subject">
-    <input type="text" id="message" placeholder="message">
-    <button onclick=${formSubmit()}>submit</button>
-</div>`)
+    res.send(mainform)
 })
 
-const formSubmit = () => {
-    console.log('hello');
-}
+app.get('/validation.js',(req, res)=>{
+
+    let fileContent = '';
+ 
+    const readInterface = readline.createInterface({
+        input: fs.createReadStream("C:\\Users\\deanl\\gittest\\node-server\\node-server\\validation.js"),
+        //output: process.stdout,
+        console: false
+    });
+
+    readInterface.on('line', function(line) {
+       fileContent += line;
+      });
+      // possibly need to wait for promises
+    // we need to wait unntil all of hte file has been read and then carry on here
+    // we do not want to get here until all of the file is read into fileContents
+console.log("fileContent is " + fileContent);
+res.send(fileContent);
+})
 
 app.post('/', (req,res)=>{
 
